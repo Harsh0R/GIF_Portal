@@ -23,7 +23,7 @@ const main = async () => {
 
   const program = anchor.workspace.Myepicproject;
   const createBaseAccount = anchor.web3.Keypair.generate();
-  console.log("Program ==> " , program);
+  console.log("Program ==> " , program.rpc);
   const tx = await program.rpc.startStuffOff(
     {
       accounts: {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import loader from "./assets/loader-unscreen.gif"
-import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL, PublicKey, clusterApiUrl } from '@solana/web3.js';
 import { Program, AnchorProvider, web3 } from '@project-serum/anchor';
 import idl from "../myepicproject.json"
 import kp from './keypair.json'
@@ -37,9 +37,23 @@ const App = () => {
 
   // State
   const [walletAddress, setWalletAddress] = useState(null);
+  const [balance, setBalance] = useState()
   const [inputValue, setInputValue] = useState("");
   const [gifList, setGifList] = useState([]);
   const [loading, setLoading] = useState(true)
+
+  const getMyBalance = async (address) => {
+    // console.log("Address ----->>> " ,address);
+    const key = new PublicKey(address);
+    const connection = new Connection(clusterApiUrl("devnet"));
+    const accountInfo =  await connection.getAccountInfo(key);
+    console.log("Accoiunt info ==> " , accountInfo);
+    connection.getBalance(key).then(balance => {
+      setBalance(balance / web3.LAMPORTS_PER_SOL)
+    })
+    // setBalance(balance);
+
+  }
 
   const getProvider = () => {
     const connction = new Connection(network, opts.preflightCommitment)
@@ -61,7 +75,10 @@ const App = () => {
       const response = await window.solana.connect({ onlyIfTrusted: true });
       console.log("Connected with Public Key:", response.publicKey.toString());
 
-      setWalletAddress(response.publicKey.toString());
+      const address = response.publicKey.toBase58();
+      setWalletAddress(response.publicKey.toBase58());
+      getMyBalance(address);
+
     } else {
       alert("Solana object not found! Get a Phantom Wallet 👻");
     }
@@ -248,6 +265,9 @@ const App = () => {
   return (
     <div className="App">
       {/* This was solely added for some styling fanciness */}
+      {balance && <h3 className="sub-text" >
+        Balance : {balance}
+      </h3>}
       <div className={walletAddress ? "authed-container" : "container"}>
         <div className="header-container">
           <p className="header">🖼️ GIF Portal</p>
