@@ -24,19 +24,19 @@ pub mod myepicproject {
     Ok(())
   }
 
-  pub fn upvote_gif(ctx: Context<UpvoteGif>, gif_link: String) -> Result<()> {
-    let base_account = &mut ctx.accounts.base_account;
+//   pub fn upvote_gif(ctx: Context<UpvoteGif>, gif_link: String) -> Result<()> {
+//     let base_account = &mut ctx.accounts.base_account;
 
-    // Find the GIF by its link
-    for item in base_account.gif_link_user_address_struct.iter_mut() {
-      if item.gif_link == gif_link {
-          item.up_vote += 1;
-          break;
-      }
-  }
-    Ok(())
+//     // Find the GIF by its link
+//     for item in base_account.gif_link_user_address_struct.iter_mut() {
+//       if item.gif_link == gif_link {
+//           item.up_vote += 1;
+//           break;
+//       }
+//   }
+//     Ok(())
 
-}
+// }
 
 
 }
@@ -58,13 +58,13 @@ pub struct AddGif<'info>{
     pub user : Signer<'info>
 }
 
-#[derive(Accounts)]
-pub struct UpvoteGif<'info>{
-  #[account(mut)]
-  pub  base_account : Account<'info , BaseAccount>,
-  #[account(mut)]
-  pub user : Signer<'info>
-}
+// #[derive(Accounts)]
+// pub struct UpvoteGif<'info>{
+//   #[account(mut)]
+//   pub  base_account : Account<'info , BaseAccount>,
+//   #[account(mut)]
+//   pub user : Signer<'info>
+// }
 
 #[derive(Debug , Clone , AnchorSerialize , AnchorDeserialize)]
 pub struct ItemStruct{

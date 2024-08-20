@@ -76,12 +76,12 @@ const main = async () => {
   
   // console.log("📝 Add 1 gif count => ", tx1);
 
-  const txupvote = await program.rcp.upvoteGif(("Hello Word2") , {
-    accounts:{
-      baseAccount:createBaseAccount.publicKey,
-      user:provider.wallet.publicKey,
-    }
-  })
+  // const txupvote = await program.rcp.upvoteGif(("Hello Word2") , {
+  //   accounts:{
+  //     baseAccount:createBaseAccount.publicKey,
+  //     user:provider.wallet.publicKey,
+  //   }
+  // })
 
 
   account = await program.account.baseAccount.fetch(createBaseAccount.publicKey);
